@@ -181,15 +181,6 @@ Lista *preencher(Lista *L){
      
      return L;
     
-    }
-void imprime(Lista *l){
-    
-    Lista *elem;
-    
-    for(elem = l; elem!=NULL;elem=elem->prox)
-        printf("%s\n%s\n%s\n%u\n%s\n",elem->nome,elem->num,elem->end,elem->cep,elem->dnas);
-    
-    
     } 
 void salvarLista(Lista *L){
     Lista *elem;
