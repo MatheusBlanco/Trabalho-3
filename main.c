@@ -23,7 +23,6 @@ typedef struct elem Lista;
 
 Lista *insereOrden(char nome[101], char num[11], char end[101], unsigned int cep, char dnas[11], Lista *L);
 Lista *preencher(Lista *L);
-void imprime(Lista *l);
 void salvarLista(Lista *L);
 Lista *inserir(Lista *L);
 Lista *remover(char nome[101],Lista *L);
@@ -167,10 +166,10 @@ Lista *preencher(Lista *L){
     char temp; 
     FILE *fp;  
   
-     fp = fopen("contatos.txt","a+"); 
+     fp = fopen("contatos.txt","r"); 
      if (fp==NULL) { 
-         printf("Falha.\n"); 
-         exit(1); } 
+         printf("\nNenhum registro previo encontrado\n"); 
+         return NULL; } 
          
      while(!feof(fp)){  
         fscanf(fp,"%[^\n]\n%[^\n]\n%[^\n]\n%u\n%[^\n]\n%c\n",nome,num,end,&cep,dnas,&temp);
@@ -245,7 +244,7 @@ Lista *inserir(Lista *L){
     
     
     L = insereOrden(nome,num,end,cep,dnas,L);
-    printf("%s\n%s\n%s\n%u\n%s\n",nome,num,end,cep,dnas);
+    
     
     return L;
     }
