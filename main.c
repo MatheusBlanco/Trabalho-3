@@ -23,6 +23,7 @@ typedef struct elem Lista;
 
 Lista *insereOrden(char nome[101], char num[11], char end[101], unsigned int cep, char dnas[11], Lista *L);
 Lista *preencher(Lista *L);
+void imprime(Lista *l);
 void salvarLista(Lista *L);
 Lista *inserir(Lista *L);
 Lista *remover(char nome[101],Lista *L);
@@ -49,10 +50,12 @@ int main(){
             
             case 1:
                listaContatos= inserir(listaContatos);
+               printf("\nContato inserido !!\n");
             break;
             
             case 2:
                listaContatos = removerPorNome(listaContatos);
+               printf("\nContato removido !!\n");
             break;
             
             case 3:
@@ -67,6 +70,15 @@ int main(){
         }while(op);
         
         salvarLista(listaContatos);
+        
+      Lista *temp;
+      
+      while (listaContatos != NULL){
+       temp = listaContatos;
+       listaContatos = listaContatos->prox;
+       free(temp);
+     }
+        
         
      return 0;
 }
@@ -106,7 +118,7 @@ Lista *insereOrden(char nome[101], char num[11], char end[101], unsigned int cep
               
                 if(strcmp(elem->nome,aux->nome)<1){
                     
-
+                      //Insere no inicio
                       if(aux->ant==NULL){
                           
                            elem->prox = aux;
@@ -114,7 +126,9 @@ Lista *insereOrden(char nome[101], char num[11], char end[101], unsigned int cep
                            aux->ant = elem;
                            return elem;
                           
-                          }
+                      }
+                      
+                      //insere no meio
                       elem->prox = aux;
                       elem->ant = aux->ant;
                       (aux->ant)->prox = elem;
@@ -122,20 +136,15 @@ Lista *insereOrden(char nome[101], char num[11], char end[101], unsigned int cep
                           
                       return L;
                           
-                          
-                      
-                      
                 }
                 
-                
+                //insere no fim
                 if(aux->prox==NULL){
                     
                      aux->prox = elem;
                      elem->prox = NULL;
                      elem->ant = aux;
                      return L;
-                    
-                    
                     
                     }
 
@@ -144,8 +153,8 @@ Lista *insereOrden(char nome[101], char num[11], char end[101], unsigned int cep
             
         
         }
-    
-    return NULL;
+    printf("Algo de errado ocorreu");
+   return NULL; 
 }
 Lista *preencher(Lista *L){
     
@@ -174,7 +183,15 @@ Lista *preencher(Lista *L){
      return L;
     
     }
-
+void imprime(Lista *l){
+    
+    Lista *elem;
+    
+    for(elem = l; elem!=NULL;elem=elem->prox)
+        printf("%s\n%s\n%s\n%u\n%s\n",elem->nome,elem->num,elem->end,elem->cep,elem->dnas);
+    
+    
+    } 
 void salvarLista(Lista *L){
     Lista *elem;
     FILE *fp;  
@@ -280,6 +297,7 @@ Lista *removerPorNome(Lista *L){
 void imprimePorNome(Lista *L){
     
    char nome[101];
+   int check = 0;
    printf("Digite o nome a ser pesquisado:\n");
    scanf(" %[^\n]",nome); 
     
@@ -288,25 +306,28 @@ void imprimePorNome(Lista *L){
    for(elem = L; elem!=NULL;elem=elem->prox){
        
          if(!strcmp(elem->nome,nome)){
-              printf("%s\n%s\n%s\n%u\n%s\n",elem->nome,elem->num,elem->end,elem->cep,elem->dnas);
+              printf("\n%s\n%s\n%s\n%u\n%s\n\n",elem->nome,elem->num,elem->end,elem->cep,elem->dnas);
+              check++;
               break;
               }
        
        }
        
-
+  if(check==0){printf("\nContato nao encontrado\n");}
   
 }
 
 void imprimeOrdem(Lista *L){
 
   Lista *elem;
+  
+  printf("\n");
    for(elem = L; elem!=NULL;elem=elem->prox){
        
     
-        printf("%s\n%s\n%s\n%u\n%s\n",elem->nome,elem->num,elem->end,elem->cep,elem->dnas);
+        printf("%s\n%s\n%s\n%u\n%s\n\n",elem->nome,elem->num,elem->end,elem->cep,elem->dnas);
        
        }
- 
+  printf("\n");
     
 }
